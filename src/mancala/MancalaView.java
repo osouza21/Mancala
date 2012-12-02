@@ -26,7 +26,9 @@ public class MancalaView implements ChangeListener{
     private int [][] board;
     private JButton [][] pits;
     private JButton undo;
+    private JButton done;
     private Model gameModel;
+    private JLabel currentPlayerLabel;
     private JFrame frame; 
     
     /**
@@ -40,13 +42,13 @@ public class MancalaView implements ChangeListener{
         board = gameModel.getBoard();
         
        
-        //settin up frame
+        //setting up frame
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
         boardsetup();
         
-        //mancal's
-        //disable the mancals from being cliced
+        //mancala's
+        //disable the mancals from being clicked
         pits[0][6].setEnabled(false);
         pits[1][6].setEnabled(false);
         frame.add(pits[0][6], BorderLayout.WEST);
@@ -62,10 +64,11 @@ public class MancalaView implements ChangeListener{
         
         
         //lables for pits
-        JLabel PlayerA = new JLabel("Player 0");
+        JLabel PlayerA = new JLabel("Player A");
         PlayerA.setFont(new Font("Serif", Font.PLAIN, 26));
-        JLabel PlayerB = new JLabel("Player 1");
+        JLabel PlayerB = new JLabel("Player B");
         PlayerB.setFont(new Font("Serif", Font.PLAIN, 26));
+        
    
         //Player A's pits
         JPanel topPanel = new JPanel();
@@ -108,15 +111,28 @@ public class MancalaView implements ChangeListener{
         frame.add(bottomPanel, BorderLayout.SOUTH);
        
         //setup undo button
-        undo = new JButton("Undo player " + gameModel.getActive());
+        undo = new JButton("Undo: " + gameModel.getUndos() + " undos left");
         undo.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 gameModel.undo();
                 gameModel.notifyListeners(); 
             }
         });
+        done = new JButton("End Turn!");
+        done.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                gameModel.done();
+                gameModel.notifyListeners(); 
+            }
+        });
         
-        frame.add(undo,BorderLayout.CENTER);
+        currentPlayerLabel = new JLabel("Player A's turn");
+        currentPlayerLabel.setFont(new Font("Serif", Font.PLAIN, 26));
+        JPanel middlePanel = new JPanel();
+        middlePanel.add(undo);
+        middlePanel.add(currentPlayerLabel);
+        middlePanel.add(done);
+        frame.add(middlePanel,BorderLayout.CENTER);
         updatePits();
         
         frame.pack();
@@ -154,7 +170,15 @@ public class MancalaView implements ChangeListener{
                 pits[i][j].setText(board[i][j] + "");
             }
         }
-        undo.setText("Undo player " + gameModel.getActive());
+        undo.setText("Undo: " + gameModel.getUndos() + " undos left");
+        if(gameModel.getActive() == 0)
+        {
+            currentPlayerLabel.setText("Player A's turn");
+        }
+        else if(gameModel.getActive() == 1)
+        {
+            currentPlayerLabel.setText("Player B's turn");
+        }
         frame.repaint();
     }
     
