@@ -3,6 +3,7 @@ package mancala;
 //test Ryan
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import javax.swing.event.ChangeListener;
 /**
  *
  * @author kai dao
+ * @author Ryan Eager
  */
 public class MancalaView implements ChangeListener{
     
@@ -38,14 +40,30 @@ public class MancalaView implements ChangeListener{
         boardsetup();
         
         //mancal's
+        //disable the mancals from being cliced
+        pits[0][6].setEnabled(false);
+        pits[1][6].setEnabled(false);
         frame.add(pits[0][6], BorderLayout.WEST);
         frame.add(pits[1][6], BorderLayout.EAST);
+        
         
         //lables for pits
         JLabel PlayerA = new JLabel("Player 0");
         PlayerA.setFont(new Font("Serif", Font.PLAIN, 26));
         JLabel PlayerB = new JLabel("Player 1");
         PlayerB.setFont(new Font("Serif", Font.PLAIN, 26));
+   
+        
+        //set color of lables
+        if(gameModel.getActive() == 0){
+            PlayerA.setForeground(Color.RED);
+            PlayerB.setForeground(Color.BLACK);
+        }
+        else{
+            PlayerA.setForeground(Color.BLACK);
+            PlayerB.setForeground(Color.RED);
+        }
+        
         //frame.add(PlayerA, BorderLayout.NORTH);
         
         //Player A's pits
