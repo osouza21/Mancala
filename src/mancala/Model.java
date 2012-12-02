@@ -76,12 +76,15 @@ public class Model {
             held--;
         }
         if (sideIndex == active && index < LENGTH - 1 && board[sideIndex][index] == 1) {
-            board[sideIndex][LENGTH - 1] += board[switchPlayer(sideIndex)][5 - index] + 1;
-            System.out.println(board[switchPlayer(sideIndex)][5 - index]);
-            board[switchPlayer(sideIndex)][5 - index] = 0;
-            System.out.println(board[switchPlayer(sideIndex)][index]);
-            board[sideIndex][index] = 0;
-            //active = switchPlayer(active);
+            
+            if(board[switchPlayer(sideIndex)][5 - index] != 0)
+            {
+                board[sideIndex][LENGTH - 1] += board[switchPlayer(sideIndex)][5 - index] + 1;
+                board[switchPlayer(sideIndex)][5 - index] = 0;
+                board[sideIndex][index] = 0;
+            }
+            
+
         }
         if (sideIndex != active || index != LENGTH - 1) {
             active = switchPlayer(active);
