@@ -29,6 +29,11 @@ public class MancalaView implements ChangeListener{
     private Model gameModel;
     private JFrame frame; 
     
+    /**
+     * 
+     * @param startingPits
+     * @param color 
+     */
     public MancalaView(int startingPits, int color){
         gameModel = new Model(startingPits);
         pits = new JButton[2][LENGTH];
@@ -127,6 +132,9 @@ public class MancalaView implements ChangeListener{
         frame.setVisible(true);
     }
 
+    /**
+     * 
+     */
     private void boardsetup(){
         for(int i = 0; i <= 1; i++){
             for( int j = 0 ; j < LENGTH; j++){
@@ -145,6 +153,9 @@ public class MancalaView implements ChangeListener{
         gameModel.attatch(this);
     }
     
+    /**
+     * 
+     */
     private void updatePits(){
         for(int i = 0; i < 2; i++ ){
             for (int j = 0; j < LENGTH; j++){
@@ -155,6 +166,10 @@ public class MancalaView implements ChangeListener{
         frame.repaint();
     }
     
+    /**
+     * 
+     * @param e 
+     */
     public void stateChanged(ChangeEvent e) {
         board = gameModel.getBoard();
         updatePits();

@@ -5,7 +5,10 @@ import java.util.ArrayList;
 
 import javax.swing.event.*;
 
-
+/**
+ * 
+ * @author Alex Souza
+ */
 public class Model {
 
     private static final int LENGTH = 7;
@@ -35,16 +38,28 @@ public class Model {
         gameover = false;
     }
 
+    /**
+     * 
+     * @param change 
+     */
     public void attatch(ChangeListener change) {
         listeners.add(change);
     }
-
+    
+    /**
+     * 
+     */
     public void notifyListeners() {
         for (ChangeListener listener : listeners) {
             listener.stateChanged(new ChangeEvent(this));
         }
     }
-
+    
+    /**
+    * 
+    * @param pit
+    * @param side 
+    */
     public void turn(int pit, int side) {
         this.saveBoard();
         System.out.println("side: " + side + " pit: " + pit);
@@ -96,6 +111,9 @@ public class Model {
         this.notifyListeners();
     }
 
+    /**
+     * 
+     */
     private void gameover() {
         
         int sum;
@@ -111,6 +129,9 @@ public class Model {
         }
     }
 
+    /**
+     *
+     **/
     private int next(int pit) {
         if (pit > LENGTH) {
             pit = 0;
@@ -120,6 +141,11 @@ public class Model {
         return pit;
     }
 
+    /**
+     * 
+     * @param activePlayer
+     * @return 
+     */
     public int switchPlayer(int activePlayer) {
         if (activePlayer == 1) {
             return 0;
@@ -128,11 +154,15 @@ public class Model {
         }
     }
 
+    /**
+     * 
+     */
     public void saveBoard() {
         boardSave = board.clone();
 
     }
 
+    /**/
     public void undo() {
         if (active == 0 && undoA > 0) {
             board = boardSave.clone();
@@ -144,10 +174,18 @@ public class Model {
         this.notifyListeners();
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int[][] getBoard() {
         return board;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getActive() {
         return active;
     }
