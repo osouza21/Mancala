@@ -1,4 +1,3 @@
-
 package mancala;
 //test Ryan
 
@@ -20,59 +19,59 @@ import javax.swing.event.ChangeListener;
  * @author kai dao
  * @author Ryan Eager
  */
-public class MancalaView implements ChangeListener{
-    
+public class MancalaView implements ChangeListener {
+
     private static final int LENGTH = 7;
-    private int [][] board;
-    private JButton [][] pits;
+    private int[][] board;
+    private JButton[][] pits;
     private JButton undo;
     private JButton done;
     private Model gameModel;
     private JLabel currentPlayerLabel;
-    private JFrame frame; 
-    
+    private JFrame frame;
+
     /**
-     * 
+     *
      * @param startingPits
-     * @param color 
+     * @param color
      */
-    public MancalaView(int startingPits, Color color){
+    public MancalaView(int startingPits, Color color) {
         gameModel = new Model(startingPits);
         pits = new JButton[2][LENGTH];
         board = gameModel.getBoard();
-        
-       
+
+
         //setting up frame
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
         boardsetup();
-        
+
         //mancala's
         //disable the mancals from being clicked
         pits[0][6].setEnabled(false);
         pits[1][6].setEnabled(false);
         frame.add(pits[0][6], BorderLayout.WEST);
         frame.add(pits[1][6], BorderLayout.EAST);
-        
-         //set color of board
-            for(int i=0; i < 2; i++){
-               for(int j=0; j < 6; j++){
-                   pits[i][j].setBackground(color);
-               }
-         }
-      
-        
-        
+
+        //set color of board
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 6; j++) {
+                pits[i][j].setBackground(color);
+            }
+        }
+
+
+
         //lables for pits
         JLabel PlayerA = new JLabel("Player A");
         PlayerA.setFont(new Font("Serif", Font.PLAIN, 26));
         JLabel PlayerB = new JLabel("Player B");
         PlayerB.setFont(new Font("Serif", Font.PLAIN, 26));
-        
-   
+
+
         //Player A's pits
         JPanel topPanel = new JPanel();
-        topPanel.setLayout(new GridLayout(2,8)); 
+        topPanel.setLayout(new GridLayout(2, 8));
         topPanel.add(new JLabel(""));
         topPanel.add(new JLabel(""));
         topPanel.add(new JLabel(""));
@@ -89,10 +88,10 @@ public class MancalaView implements ChangeListener{
         topPanel.add(pits[0][1]);
         topPanel.add(pits[0][0]);
         frame.add(topPanel, BorderLayout.NORTH);
-        
+
         //Player B's pits
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new GridLayout(2,8));
+        bottomPanel.setLayout(new GridLayout(2, 8));
         bottomPanel.add(new JLabel(""));
         bottomPanel.add(pits[1][0]);
         bottomPanel.add(pits[1][1]);
@@ -109,48 +108,47 @@ public class MancalaView implements ChangeListener{
         bottomPanel.add(new JLabel(""));
         bottomPanel.add(new JLabel(""));
         frame.add(bottomPanel, BorderLayout.SOUTH);
-       
+
         //setup undo button
         undo = new JButton("Undo: " + gameModel.getUndos() + " undos left");
-        undo.addActionListener(new ActionListener(){
+        undo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gameModel.undo();
-                gameModel.notifyListeners(); 
+                gameModel.notifyListeners();
             }
         });
         done = new JButton("End Turn!");
-        done.addActionListener(new ActionListener(){
+        done.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gameModel.done();
-                gameModel.notifyListeners(); 
+                gameModel.notifyListeners();
             }
         });
-        
+
         currentPlayerLabel = new JLabel("Player A's turn");
         currentPlayerLabel.setFont(new Font("Serif", Font.PLAIN, 26));
         JPanel middlePanel = new JPanel();
         middlePanel.add(undo);
         middlePanel.add(currentPlayerLabel);
         middlePanel.add(done);
-        frame.add(middlePanel,BorderLayout.CENTER);
+        frame.add(middlePanel, BorderLayout.CENTER);
         updatePits();
-        
+
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
     /**
-     * 
+     *
      */
-    private void boardsetup(){
-        for(int i = 0; i <= 1; i++){
-            for( int j = 0 ; j < LENGTH; j++){
+    private void boardsetup() {
+        for (int i = 0; i <= 1; i++) {
+            for (int j = 0; j < LENGTH; j++) {
                 pits[i][j] = new JButton();
                 final int pit = j;
                 final int side = i;
-                pits[i][j].addActionListener(new ActionListener(){
-                    
+                pits[i][j].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         gameModel.turn(pit, side);
                         gameModel.notifyListeners();
@@ -160,31 +158,32 @@ public class MancalaView implements ChangeListener{
         }
         gameModel.attatch(this);
     }
-    
+
     /**
-     * 
+     *
      */
-    private void updatePits(){
-        for(int i = 0; i < 2; i++ ){
-            for (int j = 0; j < LENGTH; j++){
+    private void updatePits() {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < LENGTH; j++) {
                 pits[i][j].setText(board[i][j] + "");
             }
         }
         undo.setText("Undo: " + gameModel.getUndos() + " undos left");
-        if(gameModel.getActive() == 0)
-        {
-            currentPlayerLabel.setText("Player A's turn");
+        if (gameModel.isGameover()) {
+            currentPlayerLabel.setText("Game Over!");
         }
-        else if(gameModel.getActive() == 1)
-        {
+        if (gameModel.getActive() == 0 && !gameModel.isGameover()) {
+            currentPlayerLabel.setText("Player A's turn");
+        } else if (gameModel.getActive() == 1 && !gameModel.isGameover()) {
             currentPlayerLabel.setText("Player B's turn");
         }
+
         frame.repaint();
     }
-    
+
     /**
-     * 
-     * @param e 
+     *
+     * @param e
      */
     public void stateChanged(ChangeEvent e) {
         board = gameModel.getBoard();
