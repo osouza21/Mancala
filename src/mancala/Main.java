@@ -1,4 +1,3 @@
-
 package mancala;
 
 import java.awt.Color;
@@ -8,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-
 public class Main {
 
     /**
@@ -17,7 +15,7 @@ public class Main {
      */
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        frame.setLayout(new GridLayout(4,1));
+        frame.setLayout(new GridLayout(4, 1));
         JButton threeRed = new JButton("3 Stones & Red Pits");
         JButton fourRed = new JButton("4 Stones & Red Pits");
         JButton threeBlue = new JButton("3 Stones & Blue Pits");
@@ -29,32 +27,31 @@ public class Main {
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        
-        //action listenrs for gametype buttons
-        threeRed.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                MancalaView view = new MancalaView(3,Color.RED);
-            }
-        });
-        
-        fourRed.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                MancalaView view = new MancalaView(4,Color.RED);
-            }
-        });
-        
-        threeBlue.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                MancalaView view = new MancalaView(3,Color.BLUE);
-            }
-        });
-        
-        fourBlue.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                MancalaView view = new MancalaView(4,Color.BLUE);
-            }
-        });
-        
-    }
 
+        //action listenrs for gametype buttons
+        threeRed.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MancalaView view = new MancalaView(3, Color.RED);
+            }
+        });
+
+        fourRed.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MancalaView view = new MancalaView(4, Color.RED);
+            }
+        });
+
+        threeBlue.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MancalaView view = new MancalaView(3, Color.BLUE);
+            }
+        });
+
+        fourBlue.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MancalaView view = new MancalaView(4, Color.BLUE);
+            }
+        });
+
+    }
 }
