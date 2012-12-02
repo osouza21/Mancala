@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import javax.swing.event.*;
 
 /**
- *
+ * the model of the Manacala program
+ * holds all of the data and manages the game logic
  * @author Alex Souza
  */
 public class Model {
@@ -19,6 +20,10 @@ public class Model {
     private boolean gameover;
     ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>();
 
+    /**
+     * creates a model and initializes the board;
+     * @param startingPits the amount of pieces in each pit to start with
+     */
     public Model(int startingPits) {
         board = new int[2][LENGTH];
         boardSave = new int[2][LENGTH];
@@ -44,15 +49,15 @@ public class Model {
     }
 
     /**
-     *
-     * @param change
+     * attach listener to the model
+     * @param change the changeListener being attached
      */
-    public void attatch(ChangeListener change) {
+    public void attach(ChangeListener change) {
         listeners.add(change);
     }
 
     /**
-     *
+     * notifies all listeners attached to this model
      */
     public void notifyListeners() {
         for (ChangeListener listener : listeners) {
@@ -137,17 +142,22 @@ public class Model {
             sumA += board[0][i];
             sumB += board[1][i];
         }
-        if (sumA == 0) {
+        if (sumA == 0) {//if side A wins give points to A from side B
             board[0][LENGTH - 1] += sumB;
             clearRow(1);
             gameover = true;
-        } else if (sumB == 0) {
+        } else if (sumB == 0) {//if side B wins give points to B from side A
             board[1][LENGTH - 1] += sumA;
             clearRow(0);
             gameover = true;
         }
     }
 
+    
+    /**
+     * clears the given side
+     * @param side the side to be cleared
+     */
     private void clearRow(int side) {
         for (int i = 0; i < LENGTH - 1; i++) {
             board[side][i] = 0;
@@ -157,7 +167,6 @@ public class Model {
 
     /**
      * ends the current players turn and set to next player
-     *
      */
     public void done() {
         undos = 3;
@@ -171,7 +180,7 @@ public class Model {
      * takes the current player as input and returns the opposite player
      *
      * @param activePlayer
-     * @return returns the opposite player
+     * @return returns the index of the opposite player
      */
     public int switchPlayer(int activePlayer) {
         if (activePlayer == 1) {
@@ -193,42 +202,52 @@ public class Model {
 
     }
 
-    /**/
+    /**
+     * resets the board to before the last move
+     */
     public void undo() {
-        if (undos > 0 && canUndo) {
+        if (undos > 0 && canUndo) { //sets board to savedBoard
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < LENGTH; j++) {
                     board[i][j] = boardSave[i][j];
                 }
             }
-            undos--;
-            canGo = true;
-            canUndo = false;
+            undos--;// undo used
+            canGo = true;// can redo turn
+            canUndo = false;// can't undo twice in a row
         }
         this.notifyListeners();
 
     }
 
     /**
-     *
-     * @return
+     * returns the board for the views
+     * @return returns the board
      */
     public int[][] getBoard() {
         return board;
     }
 
     /**
-     *
-     * @return
+     * returns the current player
+     * @return the current player
      */
     public int getActive() {
         return active;
     }
 
+    /**
+     * returns the amount of undos left
+     * @return the number of undos
+     */
     public int getUndos() {
         return undos;
     }
 
+    /**
+     * checks to see if gameover is true or false
+     * @return true or false
+     */
     public boolean isGameover() {
         return gameover;
     }
