@@ -34,7 +34,7 @@ public class MancalaView implements ChangeListener{
      * @param startingPits
      * @param color 
      */
-    public MancalaView(int startingPits, int color){
+    public MancalaView(int startingPits, Color color){
         gameModel = new Model(startingPits);
         pits = new JButton[2][LENGTH];
         board = gameModel.getBoard();
@@ -53,20 +53,12 @@ public class MancalaView implements ChangeListener{
         frame.add(pits[1][6], BorderLayout.EAST);
         
          //set color of board
-        if(color == 0){
             for(int i=0; i < 2; i++){
-               for(int j=0; j < 7; j++){
-                   pits[i][j].setBackground(Color.RED);
+               for(int j=0; j < 6; j++){
+                   pits[i][j].setBackground(color);
                }
          }
-        }
-        else{
-            for(int i=0; i < 2; i++){
-               for(int j=0; j < 7; j++){
-                   pits[i][j].setBackground(Color.BLUE);
-               }
-         }
-        }
+      
         
         
         //lables for pits

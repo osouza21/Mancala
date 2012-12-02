@@ -1,6 +1,7 @@
 
 package mancala;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,25 +33,25 @@ public class Main {
         //action listenrs for gametype buttons
         threeRed.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                MancalaView view = new MancalaView(3,0);
+                MancalaView view = new MancalaView(3,Color.RED);
             }
         });
         
         fourRed.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                MancalaView view = new MancalaView(4,0);
+                MancalaView view = new MancalaView(4,Color.RED);
             }
         });
         
         threeBlue.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                MancalaView view = new MancalaView(3,1);
+                MancalaView view = new MancalaView(3,Color.BLUE);
             }
         });
         
         fourBlue.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                MancalaView view = new MancalaView(4,1);
+                MancalaView view = new MancalaView(4,Color.BLUE);
             }
         });
         
