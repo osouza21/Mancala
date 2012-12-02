@@ -29,11 +29,12 @@ public class MancalaView implements ChangeListener{
     private Model gameModel;
     private JFrame frame; 
     
-    public MancalaView(int startingPits){
+    public MancalaView(int startingPits, int color){
         gameModel = new Model(startingPits);
         pits = new JButton[2][LENGTH];
         board = gameModel.getBoard();
         
+       
         //settin up frame
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -46,6 +47,22 @@ public class MancalaView implements ChangeListener{
         frame.add(pits[0][6], BorderLayout.WEST);
         frame.add(pits[1][6], BorderLayout.EAST);
         
+         //set color of board
+        if(color == 0){
+            for(int i=0; i < 2; i++){
+               for(int j=0; j < 7; j++){
+                   pits[i][j].setBackground(Color.RED);
+               }
+         }
+        }
+        else{
+            for(int i=0; i < 2; i++){
+               for(int j=0; j < 7; j++){
+                   pits[i][j].setBackground(Color.BLUE);
+               }
+         }
+        }
+        
         
         //lables for pits
         JLabel PlayerA = new JLabel("Player 0");
@@ -53,19 +70,6 @@ public class MancalaView implements ChangeListener{
         JLabel PlayerB = new JLabel("Player 1");
         PlayerB.setFont(new Font("Serif", Font.PLAIN, 26));
    
-        
-        //set color of lables
-        if(gameModel.getActive() == 0){
-            PlayerA.setForeground(Color.RED);
-            PlayerB.setForeground(Color.BLACK);
-        }
-        else{
-            PlayerA.setForeground(Color.BLACK);
-            PlayerB.setForeground(Color.RED);
-        }
-        
-        //frame.add(PlayerA, BorderLayout.NORTH);
-        
         //Player A's pits
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new GridLayout(2,8)); 
