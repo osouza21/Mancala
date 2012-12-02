@@ -156,7 +156,7 @@ public class MancalaView implements ChangeListener {
                 });
             }
         }
-        gameModel.attatch(this);
+        gameModel.attach(this);
     }
 
     /**
