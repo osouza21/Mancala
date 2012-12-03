@@ -140,7 +140,8 @@ public class MancalaView implements ChangeListener {
     }
 
     /**
-     *
+     * sets up the board with buttons and action listeners 
+     * attached this change listener to the game model
      */
     private void boardsetup() {
         for (int i = 0; i <= 1; i++) {
@@ -160,7 +161,8 @@ public class MancalaView implements ChangeListener {
     }
 
     /**
-     *
+     * Updates the pits with the newest version of the game model
+     * and repaints the frame
      */
     private void updatePits() {
         for (int i = 0; i < 2; i++) {
@@ -182,7 +184,7 @@ public class MancalaView implements ChangeListener {
     }
 
     /**
-     *
+     * gets information for updating the pits then calls update pits
      * @param e
      */
     public void stateChanged(ChangeEvent e) {
