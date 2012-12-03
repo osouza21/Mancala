@@ -28,18 +28,20 @@ public class MancalaView implements ChangeListener {
     private JButton done;
     private Model gameModel;
     private JLabel currentPlayerLabel;
+    private JLabel PlayerA;
+    private JLabel PlayerB;
     private JFrame frame;
 
     /**
      *
-     * @param startingPits
-     * @param color
+     * @param startingPits number of stones in each pit at the start of the game
+     * @param color color of the pits
      */
     public MancalaView(int startingPits, Color color) {
+        //set up game
         gameModel = new Model(startingPits);
         pits = new JButton[2][LENGTH];
         board = gameModel.getBoard();
-
 
         //setting up frame
         frame = new JFrame();
@@ -47,25 +49,23 @@ public class MancalaView implements ChangeListener {
         boardsetup();
 
         //mancala's
-        //disable the mancals from being clicked
+            //disable the mancals from being clicked
         pits[0][6].setEnabled(false);
         pits[1][6].setEnabled(false);
         frame.add(pits[0][6], BorderLayout.WEST);
         frame.add(pits[1][6], BorderLayout.EAST);
 
-        //set color of board
+        //set color of pits
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 6; j++) {
                 pits[i][j].setBackground(color);
             }
         }
 
-
-
-        //lables for pits
-        JLabel PlayerA = new JLabel("Player A");
+        //lables for sides of the board
+        PlayerA = new JLabel("Player A");
         PlayerA.setFont(new Font("Serif", Font.PLAIN, 26));
-        JLabel PlayerB = new JLabel("Player B");
+        PlayerB = new JLabel("Player B");
         PlayerB.setFont(new Font("Serif", Font.PLAIN, 26));
 
 
@@ -125,6 +125,7 @@ public class MancalaView implements ChangeListener {
             }
         });
 
+        //set up label for current turn
         currentPlayerLabel = new JLabel("Player A's turn");
         currentPlayerLabel.setFont(new Font("Serif", Font.PLAIN, 26));
         JPanel middlePanel = new JPanel();
@@ -176,8 +177,12 @@ public class MancalaView implements ChangeListener {
         }
         if (gameModel.getActive() == 0 && !gameModel.isGameover()) {
             currentPlayerLabel.setText("Player A's turn");
+            PlayerA.setForeground(Color.RED);
+            PlayerB.setForeground(Color.BLACK);
         } else if (gameModel.getActive() == 1 && !gameModel.isGameover()) {
             currentPlayerLabel.setText("Player B's turn");
+            PlayerB.setForeground(Color.RED);
+            PlayerA.setForeground(Color.BLACK);
         }
 
         frame.repaint();
