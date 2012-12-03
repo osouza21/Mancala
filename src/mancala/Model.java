@@ -143,11 +143,11 @@ public class Model {
             sumB += board[1][i];
         }
         if (sumA == 0) {//if side A wins give points to A from side B
-            board[0][LENGTH - 1] += sumB;
+            board[1][LENGTH - 1] += sumB;
             clearRow(1);
             gameover = true;
         } else if (sumB == 0) {//if side B wins give points to B from side A
-            board[1][LENGTH - 1] += sumA;
+            board[0][LENGTH - 1] += sumA;
             clearRow(0);
             gameover = true;
         }
