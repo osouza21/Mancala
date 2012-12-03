@@ -174,6 +174,9 @@ public class MancalaView implements ChangeListener {
         undo.setText("Undo: " + gameModel.getUndos() + " undos left");
         if (gameModel.isGameover()) {
             currentPlayerLabel.setText("Game Over!");
+            currentPlayerLabel.setForeground(Color.RED);
+            PlayerA.setForeground(Color.BLACK);
+            PlayerB.setForeground(Color.BLACK);
         }
         if (gameModel.getActive() == 0 && !gameModel.isGameover()) {
             currentPlayerLabel.setText("Player A's turn");

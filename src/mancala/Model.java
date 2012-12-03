@@ -195,9 +195,7 @@ public class Model {
      */
     public void saveBoard() {
         for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < LENGTH; j++) {
-                boardSave[i][j] = board[i][j];
-            }
+            System.arraycopy(board[i], 0, boardSave[i], 0, LENGTH);
         }
 
     }
@@ -208,9 +206,7 @@ public class Model {
     public void undo() {
         if (undos > 0 && canUndo) { //sets board to savedBoard
             for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < LENGTH; j++) {
-                    board[i][j] = boardSave[i][j];
-                }
+                System.arraycopy(boardSave[i], 0, board[i], 0, LENGTH);
             }
             undos--;// undo used
             canGo = true;// can redo turn
@@ -221,7 +217,7 @@ public class Model {
     }
 
     /**
-     * returns the board for the views
+     * 
      * @return returns the board
      */
     public int[][] getBoard() {
@@ -229,7 +225,7 @@ public class Model {
     }
 
     /**
-     * returns the current player
+     * 
      * @return the current player
      */
     public int getActive() {
@@ -237,7 +233,7 @@ public class Model {
     }
 
     /**
-     * returns the amount of undos left
+     * 
      * @return the number of undos
      */
     public int getUndos() {
@@ -245,8 +241,8 @@ public class Model {
     }
 
     /**
-     * checks to see if gameover is true or false
-     * @return true or false
+     * 
+     * @return true if game is over false if it is not
      */
     public boolean isGameover() {
         return gameover;
